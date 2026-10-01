@@ -1,0 +1,46 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+model_provider = "openai"
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+developer_instructions = """
+Coordinate development with native dev-* subagents. Before substantial work,
+read the orchestration skill. You own task tracking, verification, review
+decisions and Git integration. A tiny safe change can be handled directly.
+"""
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+[features]
+multi_agent = true
+plugins = false
+apps = false
+hooks = false
+memories = false
+
+[[skills.config]]
+name = "agentic-dev"
+enabled = false
+
+[[skills.config]]
+name = "agentic-development"
+enabled = false
+
+# Keep CodeGraph available; disable unrelated MCP integrations in this profile.
+[mcp_servers.caveman]
+enabled = false
+[mcp_servers.n8n]
+enabled = false
+[mcp_servers.slack]
+enabled = false
+[mcp_servers.node_repl]
+enabled = false
+[mcp_servers.computer-use]
+enabled = false
+[mcp_servers.camofox]
+enabled = false
+[mcp_servers.signoz]
+enabled = false
