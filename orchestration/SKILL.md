@@ -1,6 +1,6 @@
 ---
 name: orchestration
-description: Use in the codex-orchestrator coordinator for substantial development with native dev-* subagents. Not for a specialist carrying out an assigned subtask.
+description: Use in the codex-orchestrator coordinator for substantial development with native dev-* subagents, and for worktree commits or completion. Not for a specialist carrying out an assigned subtask.
 ---
 
 # Orchestration
@@ -14,10 +14,12 @@ no-delegation rule are behavioral instructions, not separate enforced sandboxes.
 
 ## Establish the task
 
-Read repository guidance and any `.agent-task.md`. Confirm the task checkout,
-intended base branch and SHA, owned paths, acceptance criteria and actual check
-commands. Preserve user changes. Use one task worktree for substantial work;
-all assigned agents work in that checkout, with only one writer at a time.
+Read repository guidance and any `.agent-task.md`. Confirm the original checkout,
+task checkout, base SHA, intended integration branch, owned paths, acceptance
+criteria and actual check commands. Record the agreed delivery scope and its
+authorization; the starting branch alone does not authorize integration. Preserve
+user changes. Use one task worktree for substantial work; all assigned agents work
+in that checkout, with only one writer at a time.
 
 Before a cloud-backed implementation call, establish authorization for this
 repository and record it in the note. Reuse explicit authorization already given
@@ -27,7 +29,8 @@ Keep `.agent-task.md` locally excluded from Git. You alone update it:
 
 ```text
 Goal and acceptance criteria
-Original repository; task checkout; branch; base SHA; candidate SHA
+Original checkout; integration branch; task checkout; task branch; base/candidate SHAs
+Delivery scope and authorization; integration status (not requested / pending / integrated / blocked); target SHA
 Repository cloud authorization and its source
 Calls used: implementation N/3; review N/3; advisor N/2
 Assignments: round / role | native agent ID | owned scope | status | result
@@ -66,14 +69,46 @@ is unclear; a known cause and correction can go straight to implementation.
    finished; its `Result` must still state a verdict. Send valid corrections to a
    new implementer assignment. Use debugger or advisor only for the needs above.
    Specialists report to you; they do not negotiate with other agents.
-5. Complete only when checks and accepted review cover the current candidate.
-   Integrate with ordinary Git when authorized. If the base or candidate changes,
-   update the branch and repeat the invalidated checks and review.
+5. Finish when checks and accepted review cover the current candidate and the
+   agreed delivery scope is fulfilled. Follow Worktree completion for worktree
+   commits and delivery. If the base or candidate changes, repeat the invalidated
+   checks and review.
 
 Use the configured role models and efforts. An unavailable provider or denied
 permission is a blocker to report, not permission to change models or bypass it.
 Read-only diagnosis that needs instrumentation becomes a bounded implementer edit.
 Wait for the active writer before editing its files yourself.
+
+## Worktree completion
+
+Apply this section before committing or finishing worktree work, including tiny
+tasks and resumed sessions. Reuse the task note and still-valid evidence; a
+commit or integration request alone does not restart implementation and review.
+
+1. Use Git to confirm the original checkout and any recorded integration branch.
+   Resolve an unknown destination before merging instead of assuming `main`.
+   A commit/checkpoint request saves work on the task branch. An authorized
+   finish/integrate request includes delivery to the original checkout. Reuse standing authorization;
+   honor a requested branch- or PR-only delivery scope.
+2. Reuse the task branch. If HEAD is detached, create a unique task branch at the
+   current HEAD before committing; this also preserves any existing detached
+   commits. Stage only task changes and record the committed candidate SHA.
+3. When integration is in scope and required checks/review cover the candidate,
+   confirm task writers have finished and inspect the destination's branch and
+   local changes again. Preserve unrelated work; resolve overlapping changes
+   before integration. Run the merge against the original checkout with its
+   recorded target branch checked out:
+   `git -C <original-checkout> merge --ff-only <task-branch>`.
+   If histories diverged, inspect and reconcile them with ordinary Git within
+   the authorized scope, then refresh affected checks and review.
+4. Verify the destination branch contains the accepted candidate and the original
+   checkout's task files reflect the intended result. Record the resulting target
+   SHA and integration status. Report committed work awaiting integration as such;
+   requested integration that is pending or blocked means delivery is incomplete.
+5. Before cleaning up an integrated worktree, move its completed note to the
+   original repository's locally ignored `.agent-notes/<task-id>.md` and verify it
+   exists there. Preserve dirty, unmerged or ambiguous worktrees. Use ordinary Git
+   or native cleanup without a new helper; ignored notes may not survive archival.
 
 ## Bound calls and preserve context
 
@@ -99,8 +134,3 @@ After interruption, inspect Git and native agent status before reassigning work.
 An incomplete report or pending assignment is unresolved evidence; confirm that
 its writer has stopped. Reconstruct from the note and current code, retaining
 counts. Native session history and the note provide checkpoints, not atomic recovery.
-
-Before cleaning up an integrated worktree, move its completed note to the original
-repository's locally ignored `.agent-notes/<task-id>.md`. Verify that it exists
-there; ignored files may not survive native archival. Preserve dirty, unmerged
-or ambiguous worktrees. Use ordinary Git or native cleanup, without a new helper.

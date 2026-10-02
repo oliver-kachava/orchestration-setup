@@ -70,10 +70,13 @@ export PATH="$HOME/.local/bin:$PATH"
 ```
 
 Preserve the main Codex configuration, unrelated agents and existing global
-Context7/CodeGraph guidance. The profile disables the older `agentic-dev` and
+Context7/CodeGraph guidance. The orchestrator inherits your normal MCP, app,
+plugin, hook and memory settings. Integrations disabled in your base configuration
+stay disabled. The profile disables only the older `agentic-dev` and
 `agentic-development` playbooks for this workflow. Finish or recover any task
 using legacy helpers before retiring those helpers. Start a fresh Codex session
-after installation so it loads the new skill and roles.
+after installation or a profile update so it loads the current configuration,
+skill and roles.
 
 ## Use
 
@@ -89,6 +92,23 @@ native Codex arguments unchanged via `codex --profile orchestrator`. The
 coordinator reads `orchestration`, assigns
 work, verifies the candidate and obtains independent review. It keeps IDs, call
 counts, results and check/review SHAs in one locally ignored `.agent-task.md`.
+
+### Completing worktree tasks
+
+A worktree commit does not update the files in the original checkout. A request
+to commit creates a checkpoint on the task branch; a request to finish and
+integrate includes delivery into the recorded destination branch. For example:
+
+> Finish this task and integrate the verified changes into the original checkout's
+> agreed target branch. Preserve unrelated local changes and verify the result there.
+
+The coordinator follows the skill's Worktree completion section, including for
+tiny tasks and resumed sessions. It records the destination and authorization,
+names detached work before committing, and reports whether integration is pending,
+blocked or verified. Existing authorization carries forward; the starting branch
+does not itself grant permission to merge. The worktree and task note are retained
+until delivery is verified and the note is preserved in the original repository.
+Git integration updates the code; it does not move the active CLI session.
 
 ## Models and boundaries
 

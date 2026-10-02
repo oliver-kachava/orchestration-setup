@@ -2,7 +2,7 @@
 
 On October 1, 2026, the user accepted native agents with instruction-based role
 boundaries and requested a ZIP of the files. The boundary decision is resolved:
-there is no adapter. This package has not been installed by the packaging step.
+there is no adapter. Creating the ZIP does not install the package.
 
 The launcher is `codex-orchestrator`, which selects `orchestrator.config.toml`
 with `--profile orchestrator`. `AGENTS.md` includes a coordinator-only skill
@@ -40,11 +40,47 @@ four roles under `agents/`, repeat runs, and backups of replaced files and
 symlinks. Checks confirmed preservation of the main `config.toml`, unrelated
 agents and symlink targets, and preflight failures without partial copies.
 Paths with spaces and execution from another working directory were also checked.
-No installed Codex files were changed.
+Those installer checks used temporary folders and did not change installed files.
 
 ZIP contents are read back and compared with the source files, including the
 launcher and installer's executable modes. These packaging checks do not
 establish successful live model routing or behavioral compliance.
+
+## October 2 profile update
+
+Removed the profile's MCP exclusions and its overrides for apps, plugins, hooks
+and memories. These now inherit the user's base configuration. Native subagents
+remain enabled, and the two older development skills remain disabled.
+
+The installed profile was backed up and updated to match the package. The main
+`config.toml` checksum stayed unchanged. All five TOML files parsed successfully.
+The installed CLI resolved the same 11 MCP definitions with and without the
+orchestrator profile; connection settings were compared without displaying them.
+
+Feature inheritance was checked structurally in TOML. The installed CLI does not
+support `--profile` with `features list`, so that command could not verify the
+resolved feature settings. No live MCP connections or model calls were tested
+as part of this configuration update.
+
+## October 2 worktree completion update
+
+The skill now distinguishes commit checkpoints from authorized integration and
+records the original checkout, destination branch, delivery scope, integration
+status and resulting SHA. The profile and optional AGENTS template route small
+and resumed worktree tasks to the same completion section.
+
+The installed skill and profile were backed up and updated to match the package.
+Checksums confirmed that the main configuration, global AGENTS file and installed
+specialist definitions were preserved. All five package TOML files parsed; only
+the profile's developer instructions changed. Skill-creator validation passed
+using an existing cached PyYAML dependency after the default Python environment
+reported that dependency missing. No dependency was installed.
+
+Manual review covered detached and named branches, commit-only requests, an
+unknown destination, authorized integration, diverged history, unrelated local
+changes and cleanup after verification. This was instruction review, not an
+automated agent behavior test. No live model run, project merge or worktree
+cleanup was performed for this update.
 
 ## Before relying on the installed workflow
 
@@ -54,6 +90,8 @@ worktree's starting revision. Then exercise an exhausted attempt count and a
 changed candidate to confirm that the coordinator stops appropriately and
 invalidates old check/review evidence. Confirm that the task note supports
 resumption and is preserved outside the worktree before cleanup.
+In that disposable checkout, confirm a commit-only request leaves the original
+files unchanged and authorized integration updates the intended destination.
 
 These live checks remain outstanding. The prior permission failure is an
 accepted design tradeoff, not an unresolved approval request. No automatic model

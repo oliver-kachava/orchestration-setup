@@ -11,6 +11,9 @@ profile, load the `orchestration` skill before substantial development. That
 skill defines role selection, ownership, handoffs, call limits, verification
 and completion. Use it as the shared workflow reference.
 
+Before the coordinator commits or finishes work in a worktree, follow the skill's
+Worktree completion section, including for tiny tasks and resumed sessions.
+
 When resuming coordinator work, read the existing `.agent-task.md` and inspect
 Git and native agent status before assigning more work.
 
