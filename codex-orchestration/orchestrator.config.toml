@@ -1,0 +1,28 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+model_provider = "openai"
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+developer_instructions = """
+Coordinate development with native dev-* subagents. Read the orchestration skill
+before substantial work and before committing or finishing work in a worktree,
+including tiny tasks and resumed sessions. You own task tracking, verification,
+review decisions and Git integration. A tiny safe change can be handled directly.
+"""
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+[features]
+multi_agent = true
+# Other features and MCP integrations inherit the base configuration.
+
+[[skills.config]]
+name = "agentic-dev"
+enabled = false
+
+[[skills.config]]
+name = "agentic-development"
+enabled = false

@@ -1,0 +1,7 @@
+{
+  "provider": "ollama",
+  "model": "deepseek-v4.1-flash:cloud",
+  "thinking": "high",
+  "timeout_seconds": 900,
+  "max_turns": 40
+}

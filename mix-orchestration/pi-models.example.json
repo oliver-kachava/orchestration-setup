@@ -1,0 +1,16 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://localhost:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [
+        {
+          "id": "deepseek-v4.1-flash:cloud",
+          "name": "DeepSeek V4.1 Flash via Ollama",
+          "reasoning": true
+        }
+      ]
+    }
+  }
+}
